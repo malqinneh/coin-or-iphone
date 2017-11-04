@@ -2,7 +2,7 @@ const css = require('sheetify');
 const choo = require('choo');
 
 css('@rosszurowski/vanilla');
-css('./design.js');
+css('./style.js');
 
 const app = choo();
 

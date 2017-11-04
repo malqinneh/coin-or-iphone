@@ -54,6 +54,10 @@ body {
   height: 100%;
 }
 
+body {
+  font-size: 16px;
+}
+
 .Link {
   display: inline-block;
   padding-bottom: 1px;
