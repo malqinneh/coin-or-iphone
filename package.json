@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "bankai build index.js --html [ --favicon assets/favicon.ico ]",
+    "build": "bankai build index.js --html [ --favicon assets/favicon.ico ] && cp _redirects dist/_redirects",
     "inspect": "bankai inspect index.js",
     "start": "bankai start index.js --html [ --favicon assets/favicon.ico ]",
     "format": "prettier --write '**/*.js'"
