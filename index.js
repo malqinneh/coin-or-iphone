@@ -24,12 +24,12 @@ const checkResponse = res => {
 const parsePrice = amount => parseInt(amount, 10) * 100;
 
 const headers = {
-  'CB-VERSION': '2017-11-04',
+  'CB-VERSION': '2017-11-04'
 };
 
 const cryptoIdToName = {
-  'BTC': 'Bitcoin',
-  'LTC': 'Litecoin',
+  BTC: 'Bitcoin',
+  LTC: 'Litecoin'
 };
 
 app.use((state, emitter) => {
@@ -42,7 +42,10 @@ app.use((state, emitter) => {
   state.constants.IPHONE_PREORDER_DATE = '2017-10-27';
   state.constants.CRYPTO_FETCH_INTERVAL = 15 * 1000;
 
-  state.cryptoId = state.constants.BITCOIN;
+  state.cryptoId =
+    window.location.host === 'litecoinoriphone.com'
+      ? state.constants.LITECOIN
+      : state.constants.BITCOIN;
   state.cryptoName = cryptoIdToName[state.cryptoId];
 
   state.cryptoInitialPrice = null;
@@ -50,8 +53,12 @@ app.use((state, emitter) => {
   state.cryptoErrorMessage = null;
   state.fetchingCryptoPrice = true;
 
+  const endpoint = `https://api.coinbase.com/v2/prices/${state.cryptoId}-USD/spot`;
+
   emitter.on(state.events.CRYPTO_FETCH_INITIAL_PRICE, () => {
-    fetch(`https://api.coinbase.com/v2/prices/${state.cryptoId}-USD/spot?date=${state.constants.IPHONE_PREORDER_DATE}`, { headers })
+    fetch(`${endpoint}?date=${state.constants.IPHONE_PREORDER_DATE}`, {
+      headers
+    })
       .then(checkResponse)
       .then(res => res.json())
       .then(body => {
@@ -68,7 +75,7 @@ app.use((state, emitter) => {
     state.fetchingCryptoPrice = true;
     emitter.emit(state.events.RENDER);
 
-    fetch(`https://api.coinbase.com/v2/prices/${state.cryptoId}-USD/spot`, { headers })
+    fetch(endpoint, { headers })
       .then(checkResponse)
       .then(res => res.json())
       .then(body => {
