@@ -17,7 +17,7 @@ module.exports = function view(state, emit) {
   }
 
   let header = html`
-    <header>
+    <header class="d-none d-block-m">
       <span class="d-inlineBlock bgc-fadedWhite pa-2 br-4 ls-1">${window.location.host}</span>
     </header>
   `;
@@ -25,7 +25,7 @@ module.exports = function view(state, emit) {
   if (state.cryptoInitialPrice === null) {
     return html`
       <body class="ff-sans bgc-black c-white">
-        <div class="h-100p x xd-column pa-4">
+        <div class="h-100p x xd-column pa-3 pa-4-m">
           ${header}
           <div class="x-auto x xa-center c-fadeWhite">
             <h2>Loading...</h2>
@@ -60,7 +60,7 @@ module.exports = function view(state, emit) {
 
   return html`
     <body class="ff-sans bgc-black c-white">
-      <div class="h-100p x xd-column pa-4">
+      <div class="h-100p x xd-column pa-3 pb-4 pa-4-m">
         ${header}
         <div class="x-auto x xa-center">
           <h1 class="fs-10vw fs-80-m lh-1d2">
