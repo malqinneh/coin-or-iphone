@@ -43,7 +43,7 @@ app.use((state, emitter) => {
   state.constants.CRYPTO_FETCH_INTERVAL = 15 * 1000;
 
   state.cryptoId =
-    window.location.host === 'litecoinoriphone.com'
+    window.location.host.replace(/^www\./, '') === 'litecoinoriphone.com'
       ? state.constants.LITECOIN
       : state.constants.BITCOIN;
   state.cryptoName = cryptoIdToName[state.cryptoId];
