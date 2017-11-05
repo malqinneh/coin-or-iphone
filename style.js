@@ -70,6 +70,7 @@ body {
 }
 
 .br-4 { border-radius: 4px; }
+.ws-noWrap { white-space: nowrap; }
 `;
 
 module.exports = custom + fcss;

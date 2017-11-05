@@ -64,28 +64,16 @@ module.exports = function view(state, emit) {
         ${header}
         <div class="x-auto x xa-center">
           <h1 class="fs-10vw fs-80-m lh-1d2">
-            ${state.params.name
-              ? `${formatName(state.params.name.trim())}, you’d`
-              : 'You’d'} now have
-            <span class="c-${differenceColor}">${differenceUnit}$${formatMoney(
-    Math.abs(differenceAmount)
-  )} USD</span>
-            if you bought ${capitalize(
-              state.cryptoName
-            )} instead of the iPhone X.
+            ${state.params.name ? `${formatName(state.params.name.trim())}, you’d` : 'You’d'} now have
+            <span class="c-${differenceColor} ws-noWrap">${differenceUnit}$${formatMoney(Math.abs(differenceAmount))} USD</span>
+            if you bought ${capitalize(state.cryptoName)} instead of the <span class="ws-noWrap">iPhone X</span>.
           </h1>
         </div>
         <footer class="c-fadeWhite fs-14 lh-1d5 ls-1">
           <p>
-            Based on the purchase price of ${cryptoAtPreorder.toFixed(
-              6
-            )} ${` ${state.cryptoId}`}
-            (equivalent to $${formatMoney(
-              IPHONE_X_PRICE_AT_PREORDER
-            )}—the price of an iPhone X 256GB)
-            on 2017-10-27 12:01 AM PST at $${formatMoney(
-              cryptoAtPreorder
-            )} per ${state.cryptoName.toLowerCase()}.
+            Based on the purchase price of ${cryptoAtPreorder.toFixed(6)} ${` ${state.cryptoId}`}
+            (equivalent to $${formatMoney(IPHONE_X_PRICE_AT_PREORDER)}—the price of an iPhone X 256GB)
+            on 2017-10-27 12:01 AM PST at $${formatMoney(state.cryptoInitialPrice)} per ${state.cryptoName.toLowerCase()}.
           </p>
         </footer>
       </div>
