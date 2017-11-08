@@ -41,20 +41,21 @@ module.exports = function view(state, emit) {
 
   const differenceAmount = fiatNow - IPHONE_X_PRICE_AT_PREORDER;
 
-  let differenceType;
+  let differenceVerb;
   let differenceColor;
   let differenceUnit;
 
   if (differenceAmount > 0) {
-    differenceType = 'gain';
+    differenceVerb = 'earned';
     differenceColor = 'green';
     differenceUnit = '+';
+
   } else if (differenceAmount < 0) {
-    differenceType = 'loss';
+    differenceVerb = 'lost';
     differenceColor = 'red';
     differenceUnit = '-';
   } else {
-    differenceType = 'neutral';
+    differenceVerb = 'earned';
     differenceColor = 'white';
   }
 
@@ -64,9 +65,9 @@ module.exports = function view(state, emit) {
         ${header}
         <div class="x-auto x xa-center">
           <h1 class="fs-10vw fs-80-m lh-1d2">
-            ${state.params.name ? `${formatName(state.params.name.trim())}, you’d` : 'You’d'} now have
+            ${state.params.name ? `${formatName(state.params.name.trim())}, you’d` : 'You’d'} have ${differenceVerb}
             <span class="c-${differenceColor} ws-noWrap">${differenceUnit}$${formatMoney(Math.abs(differenceAmount))} USD</span>
-            if you bought ${capitalize(state.cryptoName)} instead of the <span class="ws-noWrap">iPhone X</span>.
+            if you bought ${state.cryptoName.toLowerCase()}s instead of the <span class="ws-noWrap">iPhone X</span>.
           </h1>
         </div>
         <footer class="c-fadeWhite fs-14 lh-1d5 ls-1">
