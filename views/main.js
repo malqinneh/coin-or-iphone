@@ -49,7 +49,6 @@ module.exports = function view(state, emit) {
     differenceVerb = 'earned';
     differenceColor = 'green';
     differenceUnit = '+';
-
   } else if (differenceAmount < 0) {
     differenceVerb = 'lost';
     differenceColor = 'red';
@@ -66,13 +65,13 @@ module.exports = function view(state, emit) {
         <div class="x-auto x xa-center">
           <h1 class="fs-10vw fs-80-m lh-1d2">
             ${state.params.name ? `${formatName(state.params.name.trim())}, you’d` : 'You’d'} have ${differenceVerb}
-            <span class="c-${differenceColor} ws-noWrap">${differenceUnit}$${formatMoney(Math.abs(differenceAmount))} USD</span>
+            <span class="c-${differenceColor} ws-noWrap">${differenceUnit}$${formatMoney(Math.abs(differenceAmount))}</span>
             if you bought ${state.cryptoName.toLowerCase()}s instead of the <span class="ws-noWrap">iPhone X</span>.
           </h1>
         </div>
         <footer class="c-fadeWhite fs-14 lh-1d5 ls-1">
           <p>
-            Based on the purchase price of ${cryptoAtPreorder.toFixed(6)} ${` ${state.cryptoId}`}
+            Based on the purchase of ${cryptoAtPreorder.toFixed(6)} ${` ${state.cryptoId}`}
             (equivalent to $${formatMoney(IPHONE_X_PRICE_AT_PREORDER)}—the price of an iPhone X 256GB)
             on 2017-10-27 12:01 AM PST at $${formatMoney(state.cryptoInitialPrice)} per ${state.cryptoName.toLowerCase()}.
           </p>

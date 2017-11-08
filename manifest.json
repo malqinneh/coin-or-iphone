@@ -1,11 +1,11 @@
 {
-  "name": "choo-test",
-  "short_name": "choo-test",
-  "description": "A very cute app",
+  "name": "coin-or-iphone",
+  "short_name": "coin-or-iphone",
+  "description": "See how much you would've made if you picked up crypto instead of the new iPhone",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffc0cb",
-  "theme_color": "#ffc0cb",
+  "background_color": "#002230",
+  "theme_color": "#002230",
   "icons": [{
     "src": "/assets/icon.png",
     "type": "image/png",
