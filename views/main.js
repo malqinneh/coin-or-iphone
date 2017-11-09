@@ -1,6 +1,7 @@
 const html = require('choo/html');
 const tinytime = require('tinytime');
 
+const isTouchDevice = 'ontouchstart' in document.documentElement;
 const IPHONE_X_PRICE_AT_PREORDER = 114900;
 
 const capitalize = str => str.substr(0, 1).toUpperCase() + str.substr(1);
@@ -96,7 +97,7 @@ module.exports = function view(state, emit) {
         </footer>
         ${state.donateModalOpen ? html`
           <div class="p-fixed p-fill bgc-overlay x xa-center xj-center" onclick=${handleOverlayClick}>
-            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pa-3 pa-4-s" onclick=${handleModalClick}>
+            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pv-4 ph-3 pa-4-m" onclick=${handleModalClick}>
               <button class="p-absolute c-overlay fs-20 pa-2 a-none" style="top: 12px; right: 12px; z-index: 9;" onclick=${handleCloseClick}>✕</button>
               <div class="fs-20 ta-center mb-4">
                 ${state.cryptoName} Address
@@ -125,6 +126,10 @@ module.exports = function view(state, emit) {
   }
 
   function handleAddressClick () {
+    if (isTouchDevice) {
+      return;
+    }
+
     this.focus();
     this.setSelectionRange(0, this.value.length);
   }
