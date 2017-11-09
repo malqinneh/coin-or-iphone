@@ -1,6 +1,3 @@
-require('isomorphic-fetch');
-
-const fs = require('fs');
 const css = require('sheetify');
 const choo = require('choo');
 
@@ -46,12 +43,12 @@ app.use((state, emitter) => {
   const variants = {
     [state.constants.BITCOIN]: {
       name: 'Bitcoin',
-      qrCode: `data:image/png;base64,${fs.readFileSync('./assets/btc.png', 'base64')}`,
+      qrCode: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQAQAAAACoxAthAAABsUlEQVR4Ae3bgWnDMBCFYUEHyEhZPSN5gICqPn6qEwlAW4Ar/A+Ikzt/BUAWsuWOmvnch3s+5sq1DqNGIulIPiZ5fJP8ov4ct/VZz5I0JZJrrNxCcqCfOt/3We2JRML8XfpzcvhXRCIhWYTs+fuvRCIhi3BaWqt+jFQikTQlJSHIRXLfxmFHImlJ5pH0Q1j0MvhrJJKOhFVtHdUM+D2N81cGkUg6EhYejPrIcxpHJqsukbQkZW7e3+nvmT2/JJLGJLWEZQcPhxnunJbwzEMi6Ug4LR/0z6V1SvnFQkUi6Ujqnga19ClBcilQl0g6EgZ/GnxnM6XcENYtl58SiYQWY/C8fRvHzgdcIulIqNWt57RSTyJXJJLOhE1lHgHva+D+evsmkTQmc76+ckbOZxOXRNKZUNt7GpNDOZdrgLs7iaQjqaHPNM71cLRXJJKWZJbQZ9x/ueMpG3WJpCOpoZY+CUFm5S2RdCSpkfMtNkrJHvzhEklP8vbf5aindF4bvycSCePu/cuTe5tDImlPqO3sFcWNNbFE0pWQB30WunBmc3JJJF1JyblhV7eeI5nlJZKG5BPTEVFHW9KadwAAAABJRU5ErkJggg==`,
       hash: '13cHTQpKgTJSfi5fctKeaNVnj1B2rrNcvN'
     },
     [state.constants.LITECOIN]: {
       name: 'Litecoin',
-      qrCode: `data:image/png;base64,${fs.readFileSync('./assets/ltc.png', 'base64')}`,
+      qrCode: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQAQAAAACoxAthAAABp0lEQVR4Ae3bAab1MBQE4MNdQJfUrXdJWcBlfiYZmT8uvPfgXGbQtMn5AvqiN68tD951YeWpqrqxusoTEtKRvHbRHr/wvDCMWFVTEhIyikUkpTKSKsx4VUjIV5CSZD+H75CQ7yIsW4R8jiAk5G9kxm5LXs3+81GhKwkJsXD8WY1W1tlYOpKQEJx5+PdAoln+T0cSElK198x8Nb95LsKmlHYkJETZ+2fMYOfu8lU+JKQj0TgvuHTPrvtNMp+p2fAQEtKWsN23+A3/uxBhOGNISFPiC7ftbbx96WYJyY2QkI5ktSZVRq5zT0hIYzLKcx17z7v/CQn5IVlDdORsMIm211jF/pCQvqTs5teiKrKbqpCQvkRlPNi7FJoFMyRASEhbcvynzq/KSV2aMSSkK/HfampEtEeMUfPQkoSEfIptqVlZZxISAs/5QvsNnQNDj9YdSUiIRVwbd4qW8a4kJOTzh5/WJQKIAD1JSMjnDz9hy7iimz8k5NcEwLGlRr66gJCQbyH+8qTtTdgvuq4kJOR8VFBjn2lUaaqeJCTEIqLLaxNNPMR7kZCQfx0usJOnvHFJAAAAAElFTkSuQmCC`,
       hash: 'LRievMV6npPSQTLwwx5ZoVXM8bkk3Chupr'
     }
   }
