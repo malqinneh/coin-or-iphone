@@ -35,12 +35,15 @@ const cryptoIdToName = {
 app.use((state, emitter) => {
   state.events.CRYPTO_FETCH_CURRENT_PRICE = 'crypto_fetchCurrentPrice';
   state.events.CRYPTO_FETCH_INITIAL_PRICE = 'crypto_fetchInitialPrice';
+  state.events.OPEN_MODAL = 'openModal';
+  state.events.CLOSE_MODAL = 'closeModal';
 
   state.constants = {};
   state.constants.BITCOIN = 'BTC';
   state.constants.LITECOIN = 'LTC';
   state.constants.IPHONE_PREORDER_DATE = '2017-10-27';
   state.constants.CRYPTO_FETCH_INTERVAL = 15 * 1000;
+
 
   state.cryptoId =
     window.location.host.replace(/^www\./, '') === 'litecoinoriphone.com'
@@ -52,8 +55,19 @@ app.use((state, emitter) => {
   state.cryptoPrice = null;
   state.cryptoErrorMessage = null;
   state.fetchingCryptoPrice = true;
+  state.donateModalOpen = false;
 
   const endpoint = `https://api.coinbase.com/v2/prices/${state.cryptoId}-USD/spot`;
+
+  emitter.on(state.events.OPEN_MODAL, () => {
+    state.donateModalOpen = true;
+    emitter.emit(state.events.RENDER);
+  });
+
+  emitter.on(state.events.CLOSE_MODAL, () => {
+    state.donateModalOpen = false;
+    emitter.emit(state.events.RENDER);
+  });
 
   emitter.on(state.events.CRYPTO_FETCH_INITIAL_PRICE, () => {
     fetch(`${endpoint}?date=${state.constants.IPHONE_PREORDER_DATE}`, {
