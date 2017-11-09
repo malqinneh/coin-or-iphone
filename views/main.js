@@ -1,7 +1,6 @@
 const html = require('choo/html');
 const tinytime = require('tinytime');
 
-const TITLE = 'Bitcoin or iPhone X';
 const IPHONE_X_PRICE_AT_PREORDER = 114900;
 
 const capitalize = str => str.substr(0, 1).toUpperCase() + str.substr(1);
@@ -23,8 +22,10 @@ const wallets = {
 }
 
 module.exports = function view(state, emit) {
-  if (state.title !== TITLE) {
-    emit(state.events.DOMTITLECHANGE, TITLE);
+  const title = `${state.cryptoName} or iPhone X`;
+
+  if (state.title !== title) {
+    emit(state.events.DOMTITLECHANGE, title);
   }
 
   let header = html`
