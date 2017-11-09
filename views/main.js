@@ -124,6 +124,7 @@ module.exports = function view(state, emit) {
   }
 
   function handleAddressClick () {
+    this.focus();
     this.setSelectionRange(0, this.value.length);
   }
 
