@@ -120,6 +120,7 @@ button {
 .w-90p { width: 95%; }
 .ud-none { -webkit-user-drag: none; -moz-user-drag: none; user-drag: none; }
 .ws-noWrap { white-space: nowrap; }
+.wthc-none { -webkit-tap-highlight-color: rgba(0,0,0,0); }
 `;
 
 module.exports = custom + fcss;

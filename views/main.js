@@ -84,7 +84,7 @@ module.exports = function view(state, emit) {
         </footer>
         ${state.donateModalOpen ? html`
           <div class="p-fixed p-fill bgc-overlay x xa-center xj-center" onclick=${handleOverlayClick}>
-            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pv-4 ph-3 pa-4-m" onclick=${handleModalClick}>
+            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pv-4 ph-3 pa-4-m wthc-none" onclick=${handleModalClick}>
               <button class="p-absolute c-overlay fs-20 pa-2 a-none" style="top: 12px; right: 12px; z-index: 9;" onclick=${handleCloseClick}>✕</button>
               <div class="fs-20 ta-center mb-4">
                 ${state.cryptoName} Address
@@ -94,7 +94,7 @@ module.exports = function view(state, emit) {
               </div>
               <div class="brb-4 b-donate of-hidden">
                 ${isTouchDevice ? html`
-                  <div class="fs-14 ta-center ph-2 pv-3 ls-0d5">${state.cryptoWalletHash}</div>
+                  <div class="fs-12 ta-center ph-2 pv-3 ls-0d5">${state.cryptoWalletHash}</div>
                 ` : html`
                   <input class="ff-sans a-none fs-14 ta-center w-100p ph-2 pv-3 ls-0d5 c-text" type="text" readonly spellcheck="false" value=${state.cryptoWalletHash} onclick=${handleDesktopAddressClick} />
                 `}
