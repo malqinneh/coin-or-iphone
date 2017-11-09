@@ -51,7 +51,7 @@ app.use((state, emitter) => {
     },
     [state.constants.LITECOIN]: {
       name: 'Litecoin',
-      qr: `data:image/png;base64,${fs.readFileSync('./assets/ltc.png', 'base64')}`,
+      qrCode: `data:image/png;base64,${fs.readFileSync('./assets/ltc.png', 'base64')}`,
       hash: 'LRievMV6npPSQTLwwx5ZoVXM8bkk3Chupr'
     }
   }
@@ -127,11 +127,15 @@ app.use((state, emitter) => {
   emitter.emit(state.events.CRYPTO_FETCH_CURRENT_PRICE);
 });
 
+app.use((state, emitter) => {
+
+});
+
 app.route('/', require('./views/main'));
 app.route('/:name', require('./views/main'));
 
-if (!module.parent) {
-  app.mount('body');
-} else {
+if (module.parent) {
   module.exports = app;
+} else {
+  app.mount('body');
 }
