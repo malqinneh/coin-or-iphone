@@ -96,8 +96,8 @@ module.exports = function view(state, emit) {
         </footer>
         ${state.donateModalOpen ? html`
           <div class="p-fixed p-fill bgc-overlay x xa-center xj-center" onclick=${handleOverlayClick}>
-            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pa-4" onclick=${handleModalClick}>
-              <button class="p-absolute c-overlay fs-20 pa-2 a-none" style="top: 20px; right: 20px; z-index: 9;" onclick=${handleCloseClick}>✕</button>
+            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pa-3 pa-4-s" onclick=${handleModalClick}>
+              <button class="p-absolute c-overlay fs-20 pa-2 a-none" style="top: 12px; right: 12px; z-index: 9;" onclick=${handleCloseClick}>✕</button>
               <div class="fs-20 ta-center mb-4">
                 ${state.cryptoName} Address
               </div>
@@ -105,7 +105,7 @@ module.exports = function view(state, emit) {
                 <img class="ud-none" src=${wallet.qr} alt="Donate ${state.cryptoName.toLowerCase()}" />
               </div>
               <div class="brb-4 b-donate of-hidden">
-                <input class="a-none fs-14 ta-center w-100p ph-2 pv-3 ls-0d5 c-text" type="text" readonly spellcheck="false" value="${wallet.hash}" onclick=${handleAddressClick} />
+                <input class="ff-sans a-none fs-14 ta-center w-100p ph-2 pv-3 ls-0d5 c-text" type="text" readonly spellcheck="false" value="${wallet.hash}" onclick=${handleAddressClick} />
               </div>
             </div>
           </div>
