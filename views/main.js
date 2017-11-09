@@ -1,8 +1,8 @@
 const html = require('choo/html');
 const tinytime = require('tinytime');
+const fs = require('fs');
 
-const isTouchDevice = 'ontouchstart' in document.documentElement;
-const IPHONE_X_PRICE_AT_PREORDER = 114900;
+const isTouchDevice = typeof document !== 'undefined' && 'ontouchstart' in document.documentElement;
 
 const capitalize = str => str.substr(0, 1).toUpperCase() + str.substr(1);
 const replaceDashes = str => str.replace(/\-/g, ' ');
@@ -11,17 +11,6 @@ const formatTimestamp = n =>
   tinytime('{YYYY}-{MM}-{DD} {H}:{mm}:{ss}').render(new Date(n));
 const formatMoney = n => (n / 100).toFixed(0).toString().replace(/(\d+)(\d{3})/, `$1,$2`);
 
-const wallets = {
-  btc: {
-    qr: '/assets/btc.png',
-    hash: '13cHTQpKgTJSfi5fctKeaNVnj1B2rrNcvN'
-  },
-  ltc: {
-    qr: '/assets/ltc.png',
-    hash: 'LRievMV6npPSQTLwwx5ZoVXM8bkk3Chupr'
-  }
-}
-
 module.exports = function view(state, emit) {
   const title = `${state.cryptoName} or iPhone X`;
 
@@ -29,11 +18,11 @@ module.exports = function view(state, emit) {
     emit(state.events.DOMTITLECHANGE, title);
   }
 
-  let header = html`
+  const header = html`
     <header class="x xj-spaceBetween">
-      <div class="bgc-fadedWhite d-none d-block-m pa-2 br-4 ls-1">${window.location.host}</div>
+      <div class="bgc-fadedWhite d-none d-block-m pa-2 br-4 ls-1">${state.host}</div>
       <button class="a-none bgc-fadedWhite pa-2 br-4" onclick=${handleOpenAddressClick}>
-        <img src="/assets/qr-code.svg" style="vertical-align: top;" />
+        <img src="data:image/svg+xml;utf8,${fs.readFileSync('./assets/qr-code.svg')}" style="vertical-align: top;" />
       </button>
     </header>
   `;
@@ -53,12 +42,10 @@ module.exports = function view(state, emit) {
     `;
   }
 
-  const cryptoAtPreorder =
-    IPHONE_X_PRICE_AT_PREORDER / state.cryptoInitialPrice;
+  const cryptoAtPreorder = state.constants.IPHONE_PRICE_AT_PREORDER / state.cryptoInitialPrice;
   const fiatNow = state.cryptoPrice * cryptoAtPreorder;
-  const wallet = wallets[state.cryptoId.toLowerCase()];
 
-  const differenceAmount = fiatNow - IPHONE_X_PRICE_AT_PREORDER;
+  const differenceAmount = fiatNow - state.constants.IPHONE_PRICE_AT_PREORDER;
 
   let differenceVerb;
   let differenceColor;
@@ -90,8 +77,8 @@ module.exports = function view(state, emit) {
         </div>
         <footer class="c-fadeWhite fs-14 lh-1d5 ls-0d5 mw-900">
           <p>
-            Based on the purchase of ${cryptoAtPreorder.toFixed(6)} ${` ${state.cryptoId}`}
-            (equivalent to $${formatMoney(IPHONE_X_PRICE_AT_PREORDER)} USD—the price of an iPhone X 256GB)
+            Based on the purchase of ${cryptoAtPreorder.toFixed(6)} ${` ${state.cryptoId.toUpperCase()}`}
+            (equivalent to $${formatMoney(state.constants.IPHONE_PRICE_AT_PREORDER)} USD—the price of an iPhone X 256GB)
             on 2017-10-27 12:01 AM PST at <span class="ws-noWrap">$${formatMoney(state.cryptoInitialPrice)} per ${state.cryptoName.toLowerCase()}.</span>
           </p>
         </footer>
@@ -103,10 +90,14 @@ module.exports = function view(state, emit) {
                 ${state.cryptoName} Address
               </div>
               <div class="pa-3 b-donate brt-4 bb-0">
-                <img class="ud-none" src=${wallet.qr} alt="Donate ${state.cryptoName.toLowerCase()}" />
+                <img class="ud-none" src=${state.cryptoWalletCode} alt="Donate ${state.cryptoName.toLowerCase()}" />
               </div>
               <div class="brb-4 b-donate of-hidden">
-                <input class="ff-sans a-none fs-14 ta-center w-100p ph-2 pv-3 ls-0d5 c-text" type="text" readonly spellcheck="false" value="${wallet.hash}" onclick=${handleAddressClick} />
+                ${isTouchDevice ? html`
+                  <div class="fs-14 ta-center ph-2 pv-3 ls-0d5">${state.cryptoWalletHash}</div>
+                ` : html`
+                  <input class="ff-sans a-none fs-14 ta-center w-100p ph-2 pv-3 ls-0d5 c-text" type="text" readonly spellcheck="false" value=${state.cryptoWalletHash} onclick=${handleDesktopAddressClick} />
+                `}
               </div>
             </div>
           </div>
@@ -125,7 +116,7 @@ module.exports = function view(state, emit) {
     e.stopPropagation();
   }
 
-  function handleAddressClick () {
+  function handleDesktopAddressClick () {
     if (isTouchDevice) {
       return;
     }

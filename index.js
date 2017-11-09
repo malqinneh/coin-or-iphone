@@ -1,3 +1,6 @@
+require('isomorphic-fetch');
+
+const fs = require('fs');
 const css = require('sheetify');
 const choo = require('choo');
 
@@ -27,11 +30,6 @@ const headers = {
   'CB-VERSION': '2017-11-04'
 };
 
-const cryptoIdToName = {
-  BTC: 'Bitcoin',
-  LTC: 'Litecoin'
-};
-
 app.use((state, emitter) => {
   state.events.CRYPTO_FETCH_CURRENT_PRICE = 'crypto_fetchCurrentPrice';
   state.events.CRYPTO_FETCH_INITIAL_PRICE = 'crypto_fetchInitialPrice';
@@ -39,17 +37,32 @@ app.use((state, emitter) => {
   state.events.CLOSE_MODAL = 'closeModal';
 
   state.constants = {};
-  state.constants.BITCOIN = 'BTC';
-  state.constants.LITECOIN = 'LTC';
+  state.constants.BITCOIN = 'btc';
+  state.constants.LITECOIN = 'ltc';
   state.constants.IPHONE_PREORDER_DATE = '2017-10-27';
+  state.constants.IPHONE_PRICE_AT_PREORDER = 114900;
   state.constants.CRYPTO_FETCH_INTERVAL = 15 * 1000;
 
+  const variants = {
+    [state.constants.BITCOIN]: {
+      name: 'Bitcoin',
+      qrCode: `data:image/png;base64,${fs.readFileSync('./assets/btc.png', 'base64')}`,
+      hash: '13cHTQpKgTJSfi5fctKeaNVnj1B2rrNcvN'
+    },
+    [state.constants.LITECOIN]: {
+      name: 'Litecoin',
+      qr: `data:image/png;base64,${fs.readFileSync('./assets/ltc.png', 'base64')}`,
+      hash: 'LRievMV6npPSQTLwwx5ZoVXM8bkk3Chupr'
+    }
+  }
 
-  state.cryptoId =
-    window.location.host.replace(/^www\./, '') === 'litecoinoriphone.com'
-      ? state.constants.LITECOIN
-      : state.constants.BITCOIN;
-  state.cryptoName = cryptoIdToName[state.cryptoId];
+  state.host = typeof window !== 'undefined' ? window.location.host.replace(/^www\./, '') : 'bitcoinoriphone.com'
+  state.cryptoId = state.host === 'litecoinoriphone.com'
+    ? state.constants.LITECOIN
+    : state.constants.BITCOIN;
+  state.cryptoName = variants[state.cryptoId].name;
+  state.cryptoWalletHash = variants[state.cryptoId].hash;
+  state.cryptoWalletCode = variants[state.cryptoId].qrCode;
 
   state.cryptoInitialPrice = null;
   state.cryptoPrice = null;
