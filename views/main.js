@@ -32,10 +32,8 @@ module.exports = function view(state, emit) {
       <body class="ff-sans bgc-black c-white">
         <div class="h-100p x xd-column pa-3 pa-4-m">
           ${header}
-          <div class="x-auto x xa-center c-fadeWhite">
-            <div class="p-absolute" style="left: 40%; top: 50%;">
-              <div class="LoadingIcon" />
-            </div>
+          <div class="x-auto x xa-center xj-center c-fadeWhite">
+            <div class="LoadingIcon" />
           </div>
         </div>
       </body>
