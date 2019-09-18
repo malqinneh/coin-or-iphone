@@ -21,9 +21,6 @@ module.exports = function view(state, emit) {
   const header = html`
     <header class="x xj-spaceBetween">
       <div class="bgc-fadedWhite d-none d-block-m pa-2 br-4 ls-1">${state.host}</div>
-      <button class="a-none bgc-fadedWhite pa-2 br-4" onclick=${handleOpenAddressClick}>
-        <img src="data:image/svg+xml;utf8,${qrCodeIcon}" style="vertical-align: top;" />
-      </button>
     </header>
   `;
 
@@ -80,58 +77,7 @@ module.exports = function view(state, emit) {
             on 2017-10-27 12:01 AM PST at <span class="ws-noWrap">$${formatMoney(state.cryptoInitialPrice)} per ${state.cryptoName.toLowerCase()}.</span>
           </p>
         </footer>
-        ${state.donateModalOpen ? html`
-          <div class="p-fixed p-fill bgc-overlay x xa-center xj-center" onclick=${handleOverlayClick}>
-            <div id="modal" class="p-relative bgc-white c-black mw-400 w-90p br-4 pv-4 ph-3 pa-4-m wthc-none" onclick=${handleModalClick}>
-              <button class="p-absolute c-overlay fs-20 pa-2 a-none" style="top: 12px; right: 12px; z-index: 9;" onclick=${handleCloseClick}>✕</button>
-              <div class="fs-20 ta-center mb-4">
-                ${state.cryptoName} Address
-              </div>
-              <div class="pa-3 b-donate brt-4 bb-0">
-                <img class="ud-none" src=${state.cryptoWalletCode} alt="Donate ${state.cryptoName.toLowerCase()}" />
-              </div>
-              <div class="brb-4 b-donate of-hidden">
-                ${isTouchDevice ? html`
-                  <div class="fs-12 ta-center ph-2 pv-3 ls-0d5">${state.cryptoWalletHash}</div>
-                ` : html`
-                  <input class="ff-sans a-none fs-14 ta-center w-100p ph-2 pv-3 ls-0d5 c-text" type="text" readonly spellcheck="false" value=${state.cryptoWalletHash} onclick=${handleDesktopAddressClick} />
-                `}
-              </div>
-            </div>
-          </div>
-        ` : ``}
       </div>
     </body>
   `;
-
-  function handleOverlayClick (e) {
-    if (e.target.id !== 'modal') {
-      emit(state.events.CLOSE_MODAL);
-    }
-  }
-
-  function handleModalClick (e) {
-    e.stopPropagation();
-  }
-
-  function handleDesktopAddressClick () {
-    if (isTouchDevice) {
-      return;
-    }
-
-    this.focus();
-    this.setSelectionRange(0, this.value.length);
-  }
-
-  function handleCloseClick () {
-    emit(state.events.CLOSE_MODAL);
-  }
-
-  function handleOpenAddressClick () {
-    if (state.donateModalOpen) {
-      emit(state.events.CLOSE_MODAL);
-    } else {
-      emit(state.events.OPEN_MODAL);
-    }
-  }
 };
